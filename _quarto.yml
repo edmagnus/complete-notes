@@ -1,0 +1,49 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Probability & Statistics Notes"
+  author: "Your Name"
+  date: today
+  repo-url: https://github.com/yourusername/stats-notes
+  repo-actions: [edit, issue]
+  search: true
+  sidebar:
+    style: docked
+    background: light
+  page-navigation: true
+  chapters:
+    - index.qmd
+    - part: "Probability"
+      chapters:
+        - 01_probability_basics.qmd
+        - 02_random_variables.qmd
+        - 03_distributions.qmd
+    - part: "Statistical Inference"
+      chapters:
+        - 04_estimation.qmd
+        - 05_hypothesis_testing.qmd
+        - 06_confidence_intervals.qmd
+    - part: "Regression & Modeling"
+      chapters:
+        - 07_linear_regression.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    number-sections: true
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+    fig-width: 6
+    fig-height: 4
+    mainfont: "Georgia"
+
+execute:
+  freeze: auto
+  warning: false

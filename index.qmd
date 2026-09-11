@@ -1,0 +1,19 @@
+# Preface {.unnumbered}
+
+These are my personal notes compiled while studying probability and statistics
+at university. They combine the mathematical development of the material with
+worked examples and simulations in R.
+
+The source for these notes lives on
+[GitHub](https://github.com/yourusername/stats-notes).
+
+## How these notes are organized
+
+- **Probability** — foundational definitions, random variables, and standard
+  distributions.
+- **Statistical inference** — estimation, hypothesis testing, and confidence
+  intervals.
+- **Regression & modeling** — linear models and beyond.
+
+Each chapter mixes theory (definitions, theorems, derivations) with R code
+used to illustrate or verify the results.

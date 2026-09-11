@@ -1,0 +1,17 @@
+{
+  "hash": "66cb2e82668b4674281ebc179f36d84f",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Probability basics\n\n## Sample spaces and events\n\nA **sample space** $\\Omega$ is the set of all possible outcomes of a random\nexperiment. An **event** $A$ is a subset of $\\Omega$, i.e. $A \\subseteq\n\\Omega$.\n\n::: {.callout-note}\n## Definition: Probability measure\n\nA probability measure $P$ on $\\Omega$ satisfies:\n\n1. $P(\\Omega) = 1$\n2. $P(A) \\geq 0$ for all events $A$\n3. For disjoint events $A_1, A_2, \\dots$,\n   $$\n   P\\left(\\bigcup_{i=1}^{\\infty} A_i\\right) = \\sum_{i=1}^{\\infty} P(A_i)\n   $$\n:::\n\nFrom these axioms it follows that for any two events $A$ and $B$,\n\n$$\nP(A \\cup B) = P(A) + P(B) - P(A \\cap B).\n$$ {#eq-inclusion-exclusion}\n\nWe use @eq-inclusion-exclusion repeatedly in later chapters (e.g. when\ncomputing unions of overlapping events).\n\n## Simulating a simple probability\n\nSuppose we want to check the classic *birthday problem*: the probability that,\namong $n$ people, at least two share a birthday. We can verify the closed-form\nresult with a Monte Carlo simulation in R.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nbirthday_prob_sim <- function(n, trials = 10000) {\n  hits <- replicate(trials, {\n    birthdays <- sample(1:365, n, replace = TRUE)\n    any(duplicated(birthdays))\n  })\n  mean(hits)\n}\n\nbirthday_prob_theory <- function(n) {\n  1 - prod((365 - 0:(n - 1)) / 365)\n}\n\nn_vals <- 2:50\nsim <- sapply(n_vals, birthday_prob_sim)\ntheory <- sapply(n_vals, birthday_prob_theory)\n\nplot(n_vals, theory, type = \"l\", col = \"steelblue\", lwd = 2,\n     xlab = \"Number of people\", ylab = \"P(shared birthday)\")\nlines(n_vals, sim, col = \"firebrick\", lty = 2)\nlegend(\"bottomright\", legend = c(\"Theoretical\", \"Simulated\"),\n       col = c(\"steelblue\", \"firebrick\"), lty = c(1, 2))\n```\n\n::: {.cell-output-display}\n![Simulated vs. theoretical probability of a shared birthday](01_probability_basics_files/figure-html/birthday-sim-1.png){width=576}\n:::\n:::\n\n\nThe simulated curve tracks the theoretical curve closely, confirming the\ncomplement-counting argument used to derive\n$P(\\text{no shared birthday}) = \\prod_{i=0}^{n-1} \\frac{365-i}{365}$.\n\n::: {.callout-tip}\n## Exam tip\n\nWhenever a problem asks for \"at least one\" of something, it's usually easier\nto compute the complement $P(\\text{none})$ and subtract from 1.\n:::\n",
+    "supporting": [
+      "01_probability_basics_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

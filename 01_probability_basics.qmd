@@ -1,0 +1,73 @@
+# Probability basics
+
+## Sample spaces and events
+
+A **sample space** $\Omega$ is the set of all possible outcomes of a random
+experiment. An **event** $A$ is a subset of $\Omega$, i.e. $A \subseteq
+\Omega$.
+
+::: {.callout-note}
+## Definition: Probability measure
+
+A probability measure $P$ on $\Omega$ satisfies:
+
+1. $P(\Omega) = 1$
+2. $P(A) \geq 0$ for all events $A$
+3. For disjoint events $A_1, A_2, \dots$,
+   $$
+   P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)
+   $$
+:::
+
+From these axioms it follows that for any two events $A$ and $B$,
+
+$$
+P(A \cup B) = P(A) + P(B) - P(A \cap B).
+$$ {#eq-inclusion-exclusion}
+
+We use @eq-inclusion-exclusion repeatedly in later chapters (e.g. when
+computing unions of overlapping events).
+
+## Simulating a simple probability
+
+Suppose we want to check the classic *birthday problem*: the probability that,
+among $n$ people, at least two share a birthday. We can verify the closed-form
+result with a Monte Carlo simulation in R.
+
+```{r}
+#| label: birthday-sim
+#| fig-cap: "Simulated vs. theoretical probability of a shared birthday"
+
+birthday_prob_sim <- function(n, trials = 10000) {
+  hits <- replicate(trials, {
+    birthdays <- sample(1:365, n, replace = TRUE)
+    any(duplicated(birthdays))
+  })
+  mean(hits)
+}
+
+birthday_prob_theory <- function(n) {
+  1 - prod((365 - 0:(n - 1)) / 365)
+}
+
+n_vals <- 2:50
+sim <- sapply(n_vals, birthday_prob_sim)
+theory <- sapply(n_vals, birthday_prob_theory)
+
+plot(n_vals, theory, type = "l", col = "steelblue", lwd = 2,
+     xlab = "Number of people", ylab = "P(shared birthday)")
+lines(n_vals, sim, col = "firebrick", lty = 2)
+legend("bottomright", legend = c("Theoretical", "Simulated"),
+       col = c("steelblue", "firebrick"), lty = c(1, 2))
+```
+
+The simulated curve tracks the theoretical curve closely, confirming the
+complement-counting argument used to derive
+$P(\text{no shared birthday}) = \prod_{i=0}^{n-1} \frac{365-i}{365}$.
+
+::: {.callout-tip}
+## Exam tip
+
+Whenever a problem asks for "at least one" of something, it's usually easier
+to compute the complement $P(\text{none})$ and subtract from 1.
+:::

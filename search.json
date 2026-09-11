@@ -1,0 +1,121 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Probability & Statistics Notes",
+    "section": "",
+    "text": "Preface\nThese are my personal notes compiled while studying probability and statistics at university. They combine the mathematical development of the material with worked examples and simulations in R.\nThe source for these notes lives on GitHub.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#how-these-notes-are-organized",
+    "href": "index.html#how-these-notes-are-organized",
+    "title": "Probability & Statistics Notes",
+    "section": "How these notes are organized",
+    "text": "How these notes are organized\n\nProbability — foundational definitions, random variables, and standard distributions.\nStatistical inference — estimation, hypothesis testing, and confidence intervals.\nRegression & modeling — linear models and beyond.\n\nEach chapter mixes theory (definitions, theorems, derivations) with R code used to illustrate or verify the results.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "01_probability_basics.html",
+    "href": "01_probability_basics.html",
+    "title": "1  Probability basics",
+    "section": "",
+    "text": "1.1 Sample spaces and events\nA sample space \\(\\Omega\\) is the set of all possible outcomes of a random experiment. An event \\(A\\) is a subset of \\(\\Omega\\), i.e. \\(A \\subseteq\n\\Omega\\).\nFrom these axioms it follows that for any two events \\(A\\) and \\(B\\),\n\\[\nP(A \\cup B) = P(A) + P(B) - P(A \\cap B).\n\\tag{1.1}\\]\nWe use Equation 1.1 repeatedly in later chapters (e.g. when computing unions of overlapping events).",
+    "crumbs": [
+      "Probability",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Probability basics</span>"
+    ]
+  },
+  {
+    "objectID": "01_probability_basics.html#sample-spaces-and-events",
+    "href": "01_probability_basics.html#sample-spaces-and-events",
+    "title": "1  Probability basics",
+    "section": "",
+    "text": "NoteDefinition: Probability measure\n\n\n\nA probability measure \\(P\\) on \\(\\Omega\\) satisfies:\n\n\\(P(\\Omega) = 1\\)\n\\(P(A) \\geq 0\\) for all events \\(A\\)\nFor disjoint events \\(A_1, A_2, \\dots\\), \\[\nP\\left(\\bigcup_{i=1}^{\\infty} A_i\\right) = \\sum_{i=1}^{\\infty} P(A_i)\n\\]",
+    "crumbs": [
+      "Probability",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Probability basics</span>"
+    ]
+  },
+  {
+    "objectID": "01_probability_basics.html#simulating-a-simple-probability",
+    "href": "01_probability_basics.html#simulating-a-simple-probability",
+    "title": "1  Probability basics",
+    "section": "1.2 Simulating a simple probability",
+    "text": "1.2 Simulating a simple probability\nSuppose we want to check the classic birthday problem: the probability that, among \\(n\\) people, at least two share a birthday. We can verify the closed-form result with a Monte Carlo simulation in R.\n\nbirthday_prob_sim &lt;- function(n, trials = 10000) {\n  hits &lt;- replicate(trials, {\n    birthdays &lt;- sample(1:365, n, replace = TRUE)\n    any(duplicated(birthdays))\n  })\n  mean(hits)\n}\n\nbirthday_prob_theory &lt;- function(n) {\n  1 - prod((365 - 0:(n - 1)) / 365)\n}\n\nn_vals &lt;- 2:50\nsim &lt;- sapply(n_vals, birthday_prob_sim)\ntheory &lt;- sapply(n_vals, birthday_prob_theory)\n\nplot(n_vals, theory, type = \"l\", col = \"steelblue\", lwd = 2,\n     xlab = \"Number of people\", ylab = \"P(shared birthday)\")\nlines(n_vals, sim, col = \"firebrick\", lty = 2)\nlegend(\"bottomright\", legend = c(\"Theoretical\", \"Simulated\"),\n       col = c(\"steelblue\", \"firebrick\"), lty = c(1, 2))\n\n\n\n\nSimulated vs. theoretical probability of a shared birthday\n\n\n\n\nThe simulated curve tracks the theoretical curve closely, confirming the complement-counting argument used to derive \\(P(\\text{no shared birthday}) = \\prod_{i=0}^{n-1} \\frac{365-i}{365}\\).\n\n\n\n\n\n\nTipExam tip\n\n\n\nWhenever a problem asks for “at least one” of something, it’s usually easier to compute the complement \\(P(\\text{none})\\) and subtract from 1.",
+    "crumbs": [
+      "Probability",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Probability basics</span>"
+    ]
+  },
+  {
+    "objectID": "02_random_variables.html",
+    "href": "02_random_variables.html",
+    "title": "2  Random variables",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Probability",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Random variables</span>"
+    ]
+  },
+  {
+    "objectID": "03_distributions.html",
+    "href": "03_distributions.html",
+    "title": "3  Distributions",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Probability",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Distributions</span>"
+    ]
+  },
+  {
+    "objectID": "04_estimation.html",
+    "href": "04_estimation.html",
+    "title": "4  Estimation",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Statistical Inference",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Estimation</span>"
+    ]
+  },
+  {
+    "objectID": "05_hypothesis_testing.html",
+    "href": "05_hypothesis_testing.html",
+    "title": "5  Hypothesis testing",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Statistical Inference",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Hypothesis testing</span>"
+    ]
+  },
+  {
+    "objectID": "06_confidence_intervals.html",
+    "href": "06_confidence_intervals.html",
+    "title": "6  Confidence intervals",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Statistical Inference",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Confidence intervals</span>"
+    ]
+  },
+  {
+    "objectID": "07_linear_regression.html",
+    "href": "07_linear_regression.html",
+    "title": "7  Linear regression",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Regression & Modeling",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  }
+]

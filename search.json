@@ -20,8 +20,18 @@
     ]
   },
   {
-    "objectID": "01_probability_basics.html",
-    "href": "01_probability_basics.html",
+    "objectID": "probability/index.html",
+    "href": "probability/index.html",
+    "title": "Probability",
+    "section": "",
+    "text": "Course\nCourse name (course code)\n\n\nTaken\nSemester, year\n\n\nMain text\nTextbook\n\n\n\nA short summary of what the course covered.",
+    "crumbs": [
+      "Probability"
+    ]
+  },
+  {
+    "objectID": "probability/01_probability_basics.html",
+    "href": "probability/01_probability_basics.html",
     "title": "1  Probability basics",
     "section": "",
     "text": "1.1 Sample spaces and events\nA sample space \\(\\Omega\\) is the set of all possible outcomes of a random experiment. An event \\(A\\) is a subset of \\(\\Omega\\), i.e. \\(A \\subseteq\n\\Omega\\).\nFrom these axioms it follows that for any two events \\(A\\) and \\(B\\),\n\\[\nP(A \\cup B) = P(A) + P(B) - P(A \\cap B).\n\\tag{1.1}\\]\nWe use Equation 1.1 repeatedly in later chapters (e.g. when computing unions of overlapping events).",
@@ -31,30 +41,30 @@
     ]
   },
   {
-    "objectID": "01_probability_basics.html#sample-spaces-and-events",
-    "href": "01_probability_basics.html#sample-spaces-and-events",
+    "objectID": "probability/01_probability_basics.html#sample-spaces-and-events",
+    "href": "probability/01_probability_basics.html#sample-spaces-and-events",
     "title": "1  Probability basics",
     "section": "",
-    "text": "NoteDefinition: Probability measure\n\n\n\nA probability measure \\(P\\) on \\(\\Omega\\) satisfies:\n\n\\(P(\\Omega) = 1\\)\n\\(P(A) \\geq 0\\) for all events \\(A\\)\nFor disjoint events \\(A_1, A_2, \\dots\\), \\[\nP\\left(\\bigcup_{i=1}^{\\infty} A_i\\right) = \\sum_{i=1}^{\\infty} P(A_i)\n\\]",
+    "text": "Definition 1.1 (Definition: Probability measure) A probability measure \\(P\\) on \\(\\Omega\\) satisfies:\n\n\\(P(\\Omega) = 1\\)\n\\(P(A) \\geq 0\\) for all events \\(A\\)\nFor disjoint events \\(A_1, A_2, \\dots\\), \\[\nP\\left(\\bigcup_{i=1}^{\\infty} A_i\\right) = \\sum_{i=1}^{\\infty} P(A_i)\n\\]",
     "crumbs": [
       "Probability",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Probability basics</span>"
     ]
   },
   {
-    "objectID": "01_probability_basics.html#simulating-a-simple-probability",
-    "href": "01_probability_basics.html#simulating-a-simple-probability",
+    "objectID": "probability/01_probability_basics.html#simulating-a-simple-probability",
+    "href": "probability/01_probability_basics.html#simulating-a-simple-probability",
     "title": "1  Probability basics",
     "section": "1.2 Simulating a simple probability",
-    "text": "1.2 Simulating a simple probability\nSuppose we want to check the classic birthday problem: the probability that, among \\(n\\) people, at least two share a birthday. We can verify the closed-form result with a Monte Carlo simulation in R.\n\nbirthday_prob_sim &lt;- function(n, trials = 10000) {\n  hits &lt;- replicate(trials, {\n    birthdays &lt;- sample(1:365, n, replace = TRUE)\n    any(duplicated(birthdays))\n  })\n  mean(hits)\n}\n\nbirthday_prob_theory &lt;- function(n) {\n  1 - prod((365 - 0:(n - 1)) / 365)\n}\n\nn_vals &lt;- 2:50\nsim &lt;- sapply(n_vals, birthday_prob_sim)\ntheory &lt;- sapply(n_vals, birthday_prob_theory)\n\nplot(n_vals, theory, type = \"l\", col = \"steelblue\", lwd = 2,\n     xlab = \"Number of people\", ylab = \"P(shared birthday)\")\nlines(n_vals, sim, col = \"firebrick\", lty = 2)\nlegend(\"bottomright\", legend = c(\"Theoretical\", \"Simulated\"),\n       col = c(\"steelblue\", \"firebrick\"), lty = c(1, 2))\n\n\n\n\nSimulated vs. theoretical probability of a shared birthday\n\n\n\n\nThe simulated curve tracks the theoretical curve closely, confirming the complement-counting argument used to derive \\(P(\\text{no shared birthday}) = \\prod_{i=0}^{n-1} \\frac{365-i}{365}\\).\n\n\n\n\n\n\nTipExam tip\n\n\n\nWhenever a problem asks for “at least one” of something, it’s usually easier to compute the complement \\(P(\\text{none})\\) and subtract from 1.",
+    "text": "1.2 Simulating a simple probability\nSuppose we want to check the classic birthday problem: the probability that, among \\(n\\) people, at least two share a birthday. We can verify the closed-form result with a Monte Carlo simulation in R.\n\n\nShow R code\nbirthday_prob_sim &lt;- function(n, trials = 10000) {\n  hits &lt;- replicate(trials, {\n    birthdays &lt;- sample(1:365, n, replace = TRUE)\n    any(duplicated(birthdays))\n  })\n  mean(hits)\n}\n\nbirthday_prob_theory &lt;- function(n) {\n  1 - prod((365 - 0:(n - 1)) / 365)\n}\n\nn_vals &lt;- 2:50\nsim &lt;- sapply(n_vals, birthday_prob_sim)\ntheory &lt;- sapply(n_vals, birthday_prob_theory)\n\nplot(n_vals, theory, type = \"l\", col = \"steelblue\", lwd = 2,\n     xlab = \"Number of people\", ylab = \"P(shared birthday)\")\nlines(n_vals, sim, col = \"firebrick\", lty = 2)\nlegend(\"bottomright\", legend = c(\"Theoretical\", \"Simulated\"),\n       col = c(\"steelblue\", \"firebrick\"), lty = c(1, 2))\n\n\n\n\n\nSimulated vs. theoretical probability of a shared birthday\n\n\n\n\nThe simulated curve tracks the theoretical curve closely, confirming the complement-counting argument used to derive \\(P(\\text{no shared birthday}) = \\prod_{i=0}^{n-1} \\frac{365-i}{365}\\).\n\n\n\n\n\n\nTipExam tip\n\n\n\nWhenever a problem asks for “at least one” of something, it’s usually easier to compute the complement \\(P(\\text{none})\\) and subtract from 1.",
     "crumbs": [
       "Probability",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Probability basics</span>"
     ]
   },
   {
-    "objectID": "02_random_variables.html",
-    "href": "02_random_variables.html",
+    "objectID": "probability/02_random_variables.html",
+    "href": "probability/02_random_variables.html",
     "title": "2  Random variables",
     "section": "",
     "text": "Notes coming soon.",
@@ -64,8 +74,8 @@
     ]
   },
   {
-    "objectID": "03_distributions.html",
-    "href": "03_distributions.html",
+    "objectID": "probability/03_distributions.html",
+    "href": "probability/03_distributions.html",
     "title": "3  Distributions",
     "section": "",
     "text": "Notes coming soon.",
@@ -75,8 +85,18 @@
     ]
   },
   {
-    "objectID": "04_estimation.html",
-    "href": "04_estimation.html",
+    "objectID": "inference/index.html",
+    "href": "inference/index.html",
+    "title": "Statistical Inference",
+    "section": "",
+    "text": "Course\nCourse name (course code)\n\n\nTaken\nSemester, year\n\n\nMain text\nTextbook\n\n\n\nA short summary of what the course covered.",
+    "crumbs": [
+      "Statistical Inference"
+    ]
+  },
+  {
+    "objectID": "inference/01_estimation.html",
+    "href": "inference/01_estimation.html",
     "title": "4  Estimation",
     "section": "",
     "text": "Notes coming soon.",
@@ -86,8 +106,8 @@
     ]
   },
   {
-    "objectID": "05_hypothesis_testing.html",
-    "href": "05_hypothesis_testing.html",
+    "objectID": "inference/02_hypothesis_testing.html",
+    "href": "inference/02_hypothesis_testing.html",
     "title": "5  Hypothesis testing",
     "section": "",
     "text": "Notes coming soon.",
@@ -97,8 +117,8 @@
     ]
   },
   {
-    "objectID": "06_confidence_intervals.html",
-    "href": "06_confidence_intervals.html",
+    "objectID": "inference/03_confidence_intervals.html",
+    "href": "inference/03_confidence_intervals.html",
     "title": "6  Confidence intervals",
     "section": "",
     "text": "Notes coming soon.",
@@ -108,14 +128,35 @@
     ]
   },
   {
-    "objectID": "07_linear_regression.html",
-    "href": "07_linear_regression.html",
+    "objectID": "regression/index.html",
+    "href": "regression/index.html",
+    "title": "Regression",
+    "section": "",
+    "text": "Course\nCourse name (course code)\n\n\nTaken\nSemester, year\n\n\nMain text\ne.g. Hansen, Regression with R (hansen2026?)\n\n\n\nA short summary of what the course covered, and how the chapters in this part relate to each other:\n\n?sec-linear-regression introduces the linear model and least squares.\n?sec-model-assumptions states the assumptions behind the linear model, shows how to check them, and what goes wrong when they fail.",
+    "crumbs": [
+      "Regression"
+    ]
+  },
+  {
+    "objectID": "regression/01_linear_regression.html",
+    "href": "regression/01_linear_regression.html",
     "title": "7  Linear regression",
     "section": "",
     "text": "Notes coming soon.",
     "crumbs": [
-      "Regression & Modeling",
+      "Regression",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "regression/02_model_assumptions.html",
+    "href": "regression/02_model_assumptions.html",
+    "title": "8  Linear regression",
+    "section": "",
+    "text": "Notes coming soon.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Linear regression</span>"
     ]
   }
 ]

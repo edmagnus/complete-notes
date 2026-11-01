@@ -6,7 +6,7 @@ A **sample space** $\Omega$ is the set of all possible outcomes of a random
 experiment. An **event** $A$ is a subset of $\Omega$, i.e. $A \subseteq
 \Omega$.
 
-::: {.callout-note}
+::: {#def-measure}
 ## Definition: Probability measure
 
 A probability measure $P$ on $\Omega$ satisfies:

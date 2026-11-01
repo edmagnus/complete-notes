@@ -1,0 +1,14 @@
+# Regression {.unnumbered}
+
+| | |
+|---|---|
+| **Course** | *Course name (course code)* |
+| **Taken** | *Semester, year* |
+| **Main text** | *e.g. Hansen, Regression with R* [@hansen2026] |
+
+A short summary of what the course covered, and how the chapters in this
+part relate to each other:
+
+- @sec-linear-regression introduces the linear model and least squares.
+- @sec-model-assumptions states the assumptions behind the linear model,
+  shows how to check them, and what goes wrong when they fail.

@@ -1,0 +1,12 @@
+# Probability {.unnumbered}
+
+<!-- This file is the landing page for this part (= one course).
+     Replace with the course details. -->
+
+| | |
+|---|---|
+| **Course** | *Course name (course code)* |
+| **Taken** | *Semester, year* |
+| **Main text** | *Textbook* |
+
+A short summary of what the course covered.

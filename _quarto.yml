@@ -1,49 +1,107 @@
+# =====================================================================
+#  _quarto.yml  —  the "control centre" of the whole book.
+#  Everything that applies to EVERY page lives here: title, structure
+#  (parts/chapters), theme, fonts, code folding, numbering, etc.
+#  A single chapter can override most of these in its own YAML header.
+# =====================================================================
+
 project:
-  type: book
-  output-dir: _book
+  type: book            # makes Quarto build a book (sidebar, parts, numbering)
+  output-dir: _book     # where the finished website ends up (not committed)
+  execute-dir: project  # R code runs from the project root, so
+                        # source("_common.R") works in every folder
 
 book:
   title: "Probability & Statistics Notes"
-  author: "Your Name"
+  subtitle: "Notes from my university courses"
+  author: "Magnus Edstrand"
   date: today
-  repo-url: https://github.com/yourusername/stats-notes
-  repo-actions: [edit, issue]
+  site-url: https://edmagnus.github.io/complete-notes
+  repo-url: https://github.com/edmagnus/complete-notes
+  repo-actions: [edit, issue, source]
   search: true
+  page-navigation: true
   sidebar:
     style: docked
-    background: light
-  page-navigation: true
+    collapse-level: 1   # only the current part is expanded in the sidebar
+    # background: light 
+
+  # -------------------------------------------------------------------
+  #  STRUCTURE: one "part" per course, one chapter per topic.
+  #  - The order here IS the order of the book.
+  #  - `part:` can be just a title ("Probability") or a .qmd file. If it
+  #    is a file, that file becomes a landing page for the part
+  #    (good for course name, semester, textbook, ...).
+  #  - A chapter that is not listed here is NOT part of the book.
+  # -------------------------------------------------------------------
   chapters:
     - index.qmd
-    - part: "Probability"
+
+    - part: probability/index.qmd
       chapters:
-        - 01_probability_basics.qmd
-        - 02_random_variables.qmd
-        - 03_distributions.qmd
-    - part: "Statistical Inference"
+        - probability/01_probability_basics.qmd
+        - probability/02_random_variables.qmd
+        - probability/03_distributions.qmd
+
+    - part: inference/index.qmd
       chapters:
-        - 04_estimation.qmd
-        - 05_hypothesis_testing.qmd
-        - 06_confidence_intervals.qmd
-    - part: "Regression & Modeling"
+        - inference/01_estimation.qmd
+        - inference/02_hypothesis_testing.qmd
+        - inference/03_confidence_intervals.qmd
+
+    - part: regression/index.qmd
       chapters:
-        - 07_linear_regression.qmd
+        - regression/01_linear_regression.qmd
+        - regression/02_model_assumptions.qmd
+
     - references.qmd
+
+  # Uncomment to get lettered appendices after the main chapters:
+  # appendices:
+  #   - appendix_r_basics.qmd
 
 bibliography: references.bib
 
+# Footnotes and citations appear in the right margin (like RwR)
+reference-location: margin
+citation-location: margin
+
+# Theorem-like blocks are numbered per chapter: Definition 8.1, 8.2, ...
+# Here we also add our own cross-referenceable "Assumption" block,
+# used as  ::: {#ass-something} ... :::  and referenced with @ass-something
+crossref:
+  custom:
+    - kind: float
+      key: ass
+      reference-prefix: Assumption
+      caption-location: top
+      latex-env: assumption
+
 format:
   html:
-    theme: cosmo
+    theme: [cosmo, custom.scss]
     number-sections: true
     toc: true
     toc-depth: 3
-    code-fold: false
-    code-tools: true
-    fig-width: 6
-    fig-height: 4
+    toc-title: "On this page"
+
+    # ---- R code appearance -------------------------------------------
+    code-fold: true               # code hidden behind a "Show code" toggle
+    code-summary: "Show R code"   # the text on that toggle
+    code-tools: true              # "</> Code" menu at the top of each page
+    code-copy: true               # copy button on code blocks
+    code-link: false
+    highlight-style: github
     mainfont: "Georgia"
 
+    # ---- figures -------------------------------------------------------
+    fig-width: 6
+    fig-height: 4
+    fig-align: center
+
+    # ---- maths -----------------------------------------------------------
+    html-math-method: mathjax
+    
 execute:
   freeze: auto
   warning: false

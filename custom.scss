@@ -1,0 +1,72 @@
+/*-- scss:defaults --*/
+// =====================================================================
+//  custom.scss — my own styling on top of the cosmo theme.
+//  The two comment lines "scss:defaults" and "scss:rules" are required.
+//
+//  To change the colour of a box type, edit the colours below.
+//  Each box uses one colour: a darker tint for the title bar,
+//  a lighter tint for the body, and the full colour for the border.
+// =====================================================================
+
+$definition-color:  #2e9e4f;   // green
+$theorem-color:     #2b6cb0;   // blue   (Theorem, Lemma, Proposition, Corollary)
+$example-color:     #b7791f;   // amber
+$exercise-color:    #805ad5;   // purple
+$remark-color:      #a0aec0;   // grey
+
+/*-- scss:rules --*/
+
+// A box with a coloured title bar, a tinted body and a border.
+@mixin titled-box($color) {
+  border: 1px solid rgba($color, 0.45);
+  border-radius: 6px;
+  background: rgba($color, 0.07);
+  padding: 0 1rem 0.1rem 1rem;
+  margin: 1.5rem 0;
+  overflow: hidden;              // keeps the title bar inside the rounded corners
+
+  // Quarto puts "Definition 1.1 (Name)" in this span at the start of the
+  // first paragraph. display: block turns it into a full-width title bar.
+  .theorem-title {
+    display: block;
+    margin: 0 -1rem 0.75rem -1rem;   // stretch to the box edges
+    padding: 0.5rem 1rem;
+    background: rgba($color, 0.22);
+    border-bottom: 1px solid rgba($color, 0.45);
+    color: darken($color, 25%);
+  }
+}
+
+// Quarto's HTML: ::: {#def-x} -> <div class="theorem definition">,
+// ::: {#thm-x} -> <div class="theorem">, ::: {#lem-x} -> "theorem lemma", ...
+div.theorem                 { @include titled-box($theorem-color); }
+div.theorem.definition      { @include titled-box($definition-color); }
+div.theorem.example         { @include titled-box($example-color); }
+div.theorem.exercise        { @include titled-box($exercise-color); }
+
+// Theorem-type statements in italics, as in most maths books
+div.theorem:not(.definition):not(.example):not(.exercise) > p {
+  font-style: italic;
+}
+div.theorem .theorem-title { font-style: normal; }
+
+// Proof: no box, but a QED square at the end so you can see where it stops.
+div.proof:not(.remark) {
+  margin-bottom: 1.5rem;
+
+  > p:last-of-type::after {
+    content: "";
+    float: right;
+    width: 0.65em;
+    height: 0.65em;
+    margin-top: 0.4em;
+    border: 1px solid currentColor;
+  }
+}
+
+// Remark (::: {.remark}): a light bar on the left, like a block quote.
+div.proof.remark {
+  border-left: 4px solid $remark-color;
+  padding: 0.25rem 0 0.1rem 1rem;
+  margin: 1.25rem 0;
+}

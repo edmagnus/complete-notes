@@ -1,0 +1,9 @@
+# Statistical Inference {.unnumbered}
+
+| | |
+|---|---|
+| **Course** | *Course name (course code)* |
+| **Taken** | *Semester, year* |
+| **Main text** | *Textbook* |
+
+A short summary of what the course covered.
